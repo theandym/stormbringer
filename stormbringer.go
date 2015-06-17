@@ -14,25 +14,26 @@ import (
 	)
 
 func main() {
+	// Constants
+	const MaxInt = int(^uint(0) >> 1)
 
 	// Flags
 	workersFlag := flag.Int("workers", 8, "number of concurrent worker processes")
 	lengthFlag := flag.Int("length", 10000, "number of calls per endpoint per worker")
 	flag.Parse()
 
-	// Workers are the number of concurrent processes used cURL target URLs.
+	// Workers are the number of concurrent processes used cURL target URLs
 	workers := workersFlag
 
-	// Length is the number of calls per endpoint per worker.
+	// Length is the number of calls per target endpoint per worker
 	var length int64
 	if *lengthFlag == 0 {
-		const MaxInt = int(^uint(0) >> 1)
 		length = int64(MaxInt)
 	} else {
 		length = int64(*lengthFlag)
 	}
 
-	// Targets are the target URLs to cURL.
+	// Targets are the target URLs to cURL
 	var targetsArg string
 	var targets []string
 	if len(flag.Args()) == 0 {
@@ -62,6 +63,8 @@ func main() {
     }(worker)
   }
 	wg.Wait()
+
+	time.Sleep(time.Hour * 24 * 365)
 
 }
 

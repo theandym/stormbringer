@@ -42,7 +42,11 @@ Tail the logs to monitor the progress:
 heroku logs --tail
 ```
 
-To rerun the test, scale down and up or restart the dynos.
+Scale down the dynos when the test is complete:
+
+```
+heroku ps:scale stormbringer=0
+```
 
 
 ## Config Vars
