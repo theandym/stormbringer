@@ -49,7 +49,7 @@ func main() {
 
 
 	// Review
-	fmt.Println("workers=" + strconv.Itoa(*workers), "length=" + strconv.FormatInt(length, 10), "targets=\"" + targetsArg + "\"")
+	fmt.Println("stormbringer=start workers=" + strconv.Itoa(*workers), "length=" + strconv.FormatInt(length, 10), "targets=\"" + targetsArg + "\"")
 
 	// Spawn `workers` goroutines
 	// http://www.goinggo.net/2014/01/concurrency-goroutines-and-gomaxprocs.html
@@ -64,6 +64,7 @@ func main() {
   }
 	wg.Wait()
 
+	fmt.Println("stormbringer=end")
 	time.Sleep(time.Hour * 24 * 365)
 
 }
@@ -82,7 +83,7 @@ func loadGen(worker int, length int64, targets []string) {
 			cmd := exec.Command(
 				"curl",
 				"-sSLw",
-				"status=%{http_code} total_time=%{time_total} time_connect=%{time_connect} time_start=%{time_starttransfer} target=\"%{url_effective}\"\n",
+				"worker=" + strconv.Itoa(worker) + " iteration=" + strconv.FormatInt(iteration, 10) + " target=\"%{url_effective}\" status=%{http_code} total_time=%{time_total} time_connect=%{time_connect} time_start=%{time_starttransfer}\n",
 				value,
 				"-o",
 				"/dev/null",
@@ -102,7 +103,7 @@ func loadGen(worker int, length int64, targets []string) {
 
 }
 
-// Shuffle slice elements.
+// Shuffle slice elements
 // http://marcelom.github.io/2013/06/07/goshuffle.html
 func shuffle(a []string) {
     for i := range a {
