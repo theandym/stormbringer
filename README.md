@@ -34,7 +34,7 @@ git push heroku master
 heroku ps:scale stormbringer=1
 ```
 
-Each dyno will create `$WORKERS` processes. Each process will cURL the target endpoints `$LENGTH` times, then die.
+Each dyno will create `$WORKERS` processes. Each process will request the target endpoints `$LENGTH` times, then sleep.
 
 Tail the logs to monitor the progress:
 
@@ -49,8 +49,30 @@ heroku ps:scale stormbringer=0
 ```
 
 
-## Config Vars
+## Config
 
-  - `TARGETS`: A comma delimited list (no spaces) of target endpoints to cURL (ex. `"https://google.com,https://facebook.com,https://twitter.com"`)
-  - `WORKERS`: The number of worker processes to run (default: `8`)
-  - `LENGTH` The number of times each worker will cURL each endpoint; use `0` to run continuously (default: `10000`)
+```
+stormbringer [--curl] [--workers=WORKERS] [--length=LENGTH] TARGETS
+```
+
+### General
+
+Whenever possible, config vars should be used to specify the values for arguments and flags. This allows for rapid changes to configuration without modifying the underlying code or configuration file(s).
+
+### Targets
+
+`stormbringer` requires a single argument (`TARGETS`), which should be a comma-delimited list (no spaces) of target endpoints to request.
+
+Example:
+
+```
+"https://google.com,https://facebook.com,https://twitter.com"
+```
+
+### Options
+
+The following flags provide the ability to modify the default configuration:
+
+  - `--curl`: Switch to `curl` for requests (default: the Go `net/http` package)
+  - `--workers`: The number of worker processes to run (default: `8`)
+  - `--length` The number of times each worker will request each target endpoint; use `0` to run continuously (default: `10000`)
