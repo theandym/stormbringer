@@ -15,7 +15,7 @@ cd stormbringer
 Create a new Heroku app with the Go buildpack:
 
 ```
-heroku apps:create [NAME] --buildpack https://github.com/heroku/heroku-buildpack-go
+heroku apps:create [NAME]
 ```
 
 Set the following config vars:
