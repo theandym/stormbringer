@@ -5,6 +5,13 @@ A simple Heroku-based distributed load testing tool inspired by [Mjölnir](https
 
 ## Quick Start
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/theandym/stormbringer)
+
+Be sure to set the `TARGETS` config var during the app setup process. Then visit the "Resources" tab for the new app and scale the `stormbringer` process type to begin the test.
+
+
+## Detailed Setup
+
 Clone this repo:
 
 ```
