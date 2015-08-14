@@ -118,7 +118,6 @@ func loadGen(curl bool, worker int, length int64, targets []string) {
 					fmt.Println(err.Error())
 	        os.Exit(1)
 		    } else {
-	        defer resp.Body.Close()
 					_, err := ioutil.ReadAll(resp.Body)
 	        if err != nil {
 						fmt.Println(err.Error())
@@ -137,6 +136,7 @@ func loadGen(curl bool, worker int, length int64, targets []string) {
 					)
 
 				}
+				resp.Body.Close()
 	    }
 
 		}
