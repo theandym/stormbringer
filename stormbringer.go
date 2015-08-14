@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"net/http"
 	"math"
 	"math/rand"
+	"net/http"
 	"os"
 	"os/exec"
 	"runtime"
@@ -14,7 +14,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	)
+)
 
 func main() {
 	// Constants
@@ -54,21 +54,20 @@ func main() {
 		}
 	}
 
-
 	// Review
-	fmt.Println("stormbringer=start workers=" + strconv.Itoa(*workers), "length=" + strconv.FormatInt(length, 10), "targets=\"" + targetsArg + "\"")
+	fmt.Println("stormbringer=start workers="+strconv.Itoa(*workers), "length="+strconv.FormatInt(length, 10), "targets=\""+targetsArg+"\"")
 
 	// Spawn `workers` goroutines
 	// http://www.goinggo.net/2014/01/concurrency-goroutines-and-gomaxprocs.html
 	runtime.GOMAXPROCS(*workers)
-  var wg sync.WaitGroup
-  for worker := 1; worker <= *workers; worker ++ {
-    wg.Add(1)
-    go func(worker int) {
+	var wg sync.WaitGroup
+	for worker := 1; worker <= *workers; worker++ {
+		wg.Add(1)
+		go func(worker int) {
 			loadGen(curl, worker, length, targets)
-      wg.Done()
-    }(worker)
-  }
+			wg.Done()
+		}(worker)
+	}
 	wg.Wait()
 
 	fmt.Println("stormbringer=end")
@@ -80,10 +79,10 @@ func main() {
 func loadGen(curl bool, worker int, length int64, targets []string) {
 
 	var iteration int64
-	for iteration = 1; iteration <= length; iteration ++ {
+	for iteration = 1; iteration <= length; iteration++ {
 
 		rand.Seed(time.Now().UnixNano())
-    shuffle(targets)
+		shuffle(targets)
 
 		for _, value := range targets {
 
@@ -93,16 +92,16 @@ func loadGen(curl bool, worker int, length int64, targets []string) {
 				cmd := exec.Command(
 					"curl",
 					"-sSLw",
-					"worker=" + strconv.Itoa(worker) + " iteration=" + strconv.FormatInt(iteration, 10) + " target=\"%{url_effective}\" status=%{http_code} total_time=%{time_total} time_connect=%{time_connect} time_start=%{time_starttransfer}\n",
+					"worker="+strconv.Itoa(worker)+" iteration="+strconv.FormatInt(iteration, 10)+" target=\"%{url_effective}\" status=%{http_code} total_time=%{time_total} time_connect=%{time_connect} time_start=%{time_starttransfer}\n",
 					value,
 					"-o",
 					"/dev/null",
-					)
+				)
 				out, err := cmd.Output()
 
 				if err != nil {
 					fmt.Println(err.Error())
-				return
+					return
 				}
 
 				fmt.Print(string(out))
@@ -114,30 +113,30 @@ func loadGen(curl bool, worker int, length int64, targets []string) {
 
 				resp, err := http.Get(value)
 
-		    if err != nil {
+				if err != nil {
 					fmt.Println(err.Error())
-	        os.Exit(1)
-		    } else {
+					os.Exit(1)
+				} else {
 					_, err := ioutil.ReadAll(resp.Body)
-	        if err != nil {
+					if err != nil {
 						fmt.Println(err.Error())
-	          os.Exit(1)
-	        }
+						os.Exit(1)
+					}
 
 					end_time := time.Now()
 
-	        // fmt.Println(string(body))
+					// fmt.Println(string(body))
 					fmt.Println(
-						"worker=" + strconv.Itoa(worker),
-						"iteration=" + strconv.FormatInt(iteration, 10),
-						"target=\"" + value + "\"",
-						"status=" + strconv.Itoa(resp.StatusCode),
-						"total_time=" + strconv.FormatFloat(timer(start_time, end_time), 'f', 3, 64),
+						"worker="+strconv.Itoa(worker),
+						"iteration="+strconv.FormatInt(iteration, 10),
+						"target=\""+value+"\"",
+						"status="+strconv.Itoa(resp.StatusCode),
+						"total_time="+strconv.FormatFloat(timer(start_time, end_time), 'f', 3, 64),
 					)
 
 				}
 				resp.Body.Close()
-	    }
+			}
 
 		}
 
@@ -148,10 +147,10 @@ func loadGen(curl bool, worker int, length int64, targets []string) {
 // Shuffle slice elements
 // http://marcelom.github.io/2013/06/07/goshuffle.html
 func shuffle(a []string) {
-    for i := range a {
-        j := rand.Intn(i + 1)
-        a[i], a[j] = a[j], a[i]
-    }
+	for i := range a {
+		j := rand.Intn(i + 1)
+		a[i], a[j] = a[j], a[i]
+	}
 }
 
 // Timer
@@ -164,10 +163,10 @@ func timer(start time.Time, end time.Time) float64 {
 // `float64` truncation
 // http://stackoverflow.com/a/29786394
 func round(num float64) int {
-  return int(num + math.Copysign(0.5, num))
+	return int(num + math.Copysign(0.5, num))
 }
 
 func toFixed(num float64, precision int) float64 {
-  output := math.Pow(10, float64(precision))
-  return float64(round(num * output)) / output
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
 }
