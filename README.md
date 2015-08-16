@@ -30,7 +30,7 @@ Set the following config vars:
 ```
 heroku config:set \
   TARGETS="https://google.com,https://facebook.com,https://twitter.com" \
-  WORKERS=8 \
+  WORKERS=4 \
   LENGTH=10000
 ```
 
@@ -81,5 +81,5 @@ Example:
 The following flags provide the ability to modify the default configuration:
 
   - `--curl`: Switch to `curl` for requests (default: the Go `net/http` package)
-  - `--workers`: The number of worker processes to run (default: `8`)
+  - `--workers`: The number of worker processes to run (default: `4`)
   - `--length` The number of times each worker will request each target endpoint; use `0` to run continuously (default: `10000`)

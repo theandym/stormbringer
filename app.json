@@ -12,8 +12,8 @@
       "value": "https://google.com,https://facebook.com,https://twitter.com"
     },
     "WORKERS": {
-      "description": "The number of worker processes to run (default: 8)",
-      "value": "8"
+      "description": "The number of worker processes to run (default: 4)",
+      "value": "4"
     },
     "LENGTH": {
       "description": "The number of times each worker will request each target endpoint; use 0 to run continuously (default: 10000)",

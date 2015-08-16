@@ -22,7 +22,7 @@ func main() {
 
 	// Flags
 	curlFlag := flag.Bool("curl", false, "switch to `curl` for requests (from the Go `net/http` package)")
-	workersFlag := flag.Int("workers", 8, "number of concurrent worker processes")
+	workersFlag := flag.Int("workers", 4, "number of concurrent worker processes")
 	lengthFlag := flag.Int("length", 10000, "number of requests per target per worker")
 	flag.Parse()
 
