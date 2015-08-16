@@ -1,13 +1,15 @@
 # Stormbringer
 
-A simple Heroku-based distributed load testing tool inspired by [Mjölnir](https://github.com/tsykoduk/Mjolnir).
+A simple Heroku-based distributed load testing tool written in Go. Inspired by [Mjölnir](https://github.com/tsykoduk/Mjolnir).
 
 
 ## Quick Start
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/theandym/stormbringer)
 
-Be sure to set the `TARGETS` config var during the app setup process. Then visit the "Resources" tab for the new app and scale the `stormbringer` process type to begin the test.
+Modify the `TARGETS` config var during the app setup process, specifying a comma-delimited list (no spaces) of target endpoints to request.
+
+Then visit the "Resources" tab for the new app and scale the `stormbringer` process type to start a load test.
 
 
 ## Detailed Setup
