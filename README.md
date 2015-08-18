@@ -85,3 +85,8 @@ The following flags provide the ability to modify the default configuration:
   - `--curl`: Switch to `curl` for requests (default: the Go `net/http` package)
   - `--workers`: The number of worker processes to run (default: `4`)
   - `--length` The number of times each worker will request each target endpoint; use `0` to run continuously (default: `10000`)
+
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
