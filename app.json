@@ -1,6 +1,6 @@
 {
   "name": "Stormbringer",
-  "description": "A simple Heroku-based distributed load testing tool",
+  "description": "A simple Heroku-based distributed load testing tool written in Go",
   "keywords": [
     "load",
     "testing"

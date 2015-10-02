@@ -40,7 +40,7 @@ func main() {
 		length = int64(*lengthFlag)
 	}
 
-	// Targets are the target URLs to cURL
+	// Targets are the target URLs to request
 	var targetsArg string
 	var targets []string
 	if len(flag.Args()) == 0 {
